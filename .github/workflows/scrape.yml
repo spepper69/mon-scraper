@@ -1,7 +1,8 @@
 name: Scraping quotidien
 
 on:
-workflow_dispatch: {}   
+
+  workflow_dispatch: {}   
   schedule:
     - cron: '0 8 * * *'
 
