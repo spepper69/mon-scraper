@@ -1,22 +1,19 @@
 name: Scraping quotidien
 
 on:
-  workflow_dispatch: {}   
-  schedule:
-    - cron: '0 8 * * *'
+  workflow_dispatch: {}      # pour déclenchement manuel
+  schedule:                  # exécution planifiée
+    - cron: '0 8 * * *'      # tous les jours à 08:00 UTC (10:00 Paris)
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout du code
+        uses: actions/checkout@v3
 
       - name: Build Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: false
-          load: true
+        run: docker build -t mon-scraper:latest .
 
       - name: Run scraper
         run: docker run --rm -v ${{ github.workspace }}:/app mon-scraper:latest
